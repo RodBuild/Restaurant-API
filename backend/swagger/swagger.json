@@ -5,7 +5,7 @@
     "title": "Contacts API",
     "description": "API to retrieve data from known contacts"
   },
-  "host": "localhost:3000",
+  "host": "restaurant-api-foodiny.herokuapp.com",
   "basePath": "",
   "tags": [{
       "name": "Reviews",
@@ -21,8 +21,8 @@
     }
   ],
   "schemes": [
-    "http",
-    "https"
+    "https",
+    "http"
   ],
   "securityDefinitions": {},
   "paths": {
