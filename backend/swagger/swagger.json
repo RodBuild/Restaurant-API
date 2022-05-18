@@ -1,0 +1,308 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Contacts API",
+    "description": "API to retrieve data from known contacts"
+  },
+  "host": "localhost:3000",
+  "basePath": "",
+  "tags": [{
+      "name": "Reviews",
+      "description": "Make requests to get data related to the stored reviews"
+    },
+    {
+      "name": "Users",
+      "description": "Make requests to get data related to the user (login)"
+    },
+    {
+      "name": "Menu",
+      "description": "Make requests to get data related to menu items"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {},
+  "paths": {
+    "/reviews/": {
+      "get": {
+        "tags": ["Reviews"],
+        "summary": "Get all available reviews",
+        "description": "Make a GET request to the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Reviews"],
+        "summary": "Create a new review",
+        "description": "Make a POST request to the database",
+        "parameters": [{
+          "name": "body",
+          "in": "body",
+          "required": true,
+          "description": "Make sure that \"email\", \"city\", \"state\" are all lowercase.",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "firstName": {
+                "example": "John"
+              },
+              "lastName": {
+                "example": "Doe"
+              },
+              "phone": {
+                "example": "\"1234567890\""
+              },
+              "email": {
+                "example": "johndoe@test.com"
+              },
+              "review": {
+                "example": "The food was great! I liked the..."
+              },
+              "stars": {
+                "example": "4"
+              },
+              "city": {
+                "example": "rexburg"
+              },
+              "state": {
+                "example": "idaho"
+              }
+            }
+          }
+        }],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/reviews/{email}": {
+      "get": {
+        "tags": ["Reviews"],
+        "summary": "Get all available reviews under specified email",
+        "description": "Make a GET request to the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "email",
+          "in": "path",
+          "required": true,
+          "description": "Type the desired email in lowercase",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/reviews/state/": {
+      "get": {
+        "tags": ["Reviews"],
+        "summary": "Get all available reviews under available states",
+        "description": "Make a GET request to the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "state",
+          "in": "query",
+          "description": "Select one of the available states for filtering",
+          "required": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["california", "utah", "idaho", "Texas"],
+            "default": "california"
+          },
+          "collectionFormat": "multi"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/reviews/{email}/{city}/{state}": {
+      "put": {
+        "tags": ["Reviews"],
+        "summary": "Update an existing review with specific email, city, state",
+        "description": "Make a PUT request to the database",
+        "parameters": [{
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "city",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "state",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "example": "John"
+                },
+                "lastName": {
+                  "example": "Doe"
+                },
+                "phone": {
+                  "example": "\"1234567890\""
+                },
+                "email": {
+                  "example": "johndoe@test.com"
+                },
+                "review": {
+                  "example": "The food was great! I liked the..."
+                },
+                "stars": {
+                  "example": "\"4\""
+                },
+                "city": {
+                  "example": "rexburg"
+                },
+                "state": {
+                  "example": "idaho"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Reviews"],
+        "summary": "Delete an existing review with specific email, city, state",
+        "description": "Make a DELETE request to the database",
+        "parameters": [{
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "city",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "state",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "tes": {},
+  "definitions": {
+    "reviews": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "review": {
+          "type": "string"
+        },
+        "stars": {
+          "type": "string",
+          "enum": ["1", "2", "3", "4", "5"]
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        }
+      }
+    },
+    "menu": {
+      "type": "object",
+      "properties": {
+        "empty": {
+          "type": "string"
+        }
+      }
+    },
+    "users": {
+      "type": "object",
+      "properties": {
+        "empty": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Future link [not currently being used]",
+    "url": "http://swagger.io"
+  }
+}

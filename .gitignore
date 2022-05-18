@@ -1,0 +1,7 @@
+test
+frontend
+ask.txt
+backend/node_modules
+backend/.env
+backend/.prettierrc
+backend/swagger/swagger-auto.json
