@@ -144,28 +144,28 @@
               "type": "object",
               "properties": {
                 "firstName": {
-                  "example": "any"
+                  "example": "John"
                 },
                 "lastName": {
-                  "example": "any"
+                  "example": "Doe"
                 },
                 "phone": {
-                  "example": "any"
+                  "example": "\"1234567890\""
                 },
                 "email": {
-                  "example": "any"
+                  "example": "johndoe@test.com"
                 },
                 "review": {
-                  "example": "any"
+                  "example": "The food was great! I liked the..."
                 },
                 "stars": {
-                  "example": "any"
+                  "example": "4"
                 },
                 "city": {
-                  "example": "any"
+                  "example": "rexburg"
                 },
                 "state": {
-                  "example": "any"
+                  "example": "idaho"
                 }
               }
             }
