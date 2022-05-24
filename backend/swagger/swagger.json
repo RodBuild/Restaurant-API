@@ -422,10 +422,10 @@
                 "example": "Loaded with plump juicy shrimp, crisp cabbage, avocado, cotija cheese, cilantro and our secret taco sauce that will win you over."
               },
               "calories": {
-                "example": "750"
+                "example": "\"750\""
               },
               "price": {
-                "example": "15.99"
+                "example": "\"15.99\""
               },
               "image": {
                 "example": "Yes"
