@@ -90,30 +90,119 @@
           "201": {
             "description": "Created"
           },
+          "412": {
+            "description": "Precondition Failed"
+          },
           "500": {
             "description": "Internal Server Error"
           }
         }
       }
     },
-    "/reviews/{email}": {
+    "/reviews/{id}": {
       "get": {
         "tags": ["Reviews"],
-        "summary": "Get all available reviews under specified email",
-        "description": "Make a GET request to the database",
+        "summary": "Get a single review by using its ID",
+        "description": "Make a POST request to the database",
         "produces": [
           "application/json"
         ],
         "parameters": [{
-          "name": "email",
+          "name": "id",
           "in": "path",
           "required": true,
-          "description": "Type the desired email in lowercase",
+          "description": "Make sure your are using a valid ID format.",
           "type": "string"
         }],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Reviews"],
+        "summary": "Update a single review by using its ID",
+        "description": "Make a PUT request to the database",
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Make sure your are using a valid ID format.",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "example": "any"
+                },
+                "lastName": {
+                  "example": "any"
+                },
+                "phone": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "review": {
+                  "example": "any"
+                },
+                "stars": {
+                  "example": "any"
+                },
+                "city": {
+                  "example": "any"
+                },
+                "state": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "412": {
+            "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Reviews"],
+        "summary": "Delete a single review by using its ID",
+        "description": "Make a DELETE request to the database",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Make sure your are using a valid ID format.",
+          "type": "string"
+        }],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "500": {
             "description": "Internal Server Error"
@@ -152,6 +241,31 @@
         }
       }
     },
+    "/reviews/{email}": {
+      "get": {
+        "tags": ["Reviews"],
+        "summary": "Get all available reviews under specified email",
+        "description": "Make a GET request to the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "email",
+          "in": "path",
+          "required": true,
+          "description": "Type the desired email in lowercase",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/reviews/{email}/{city}/{state}": {
       "put": {
         "tags": ["Reviews"],
@@ -161,6 +275,7 @@
             "name": "email",
             "in": "path",
             "required": true,
+            "description": "This could be useful when filtering data",
             "type": "string"
           },
           {
@@ -213,6 +328,9 @@
           "204": {
             "description": "No Content"
           },
+          "412": {
+            "description": "Precondition Failed"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -226,6 +344,7 @@
             "name": "email",
             "in": "path",
             "required": true,
+            "description": "This could be useful when the user desires to delete its review.",
             "type": "string"
           },
           {
@@ -250,9 +369,175 @@
           }
         }
       }
+    },
+    "/menu/": {
+      "get": {
+        "tags": ["Menu"],
+        "summary": "Get all available menu items",
+        "description": "Make a GET request to the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Menu"],
+        "summary": "Create a new menu item",
+        "description": "Make a POST request to the database",
+        "parameters": [{
+          "name": "body",
+          "in": "body",
+          "required": true,
+          "description": "Images are stored as: [something]",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "example": "Shrimp Tacos"
+              },
+              "description": {
+                "example": "Loaded with plump juicy shrimp, crisp cabbage, avocado, cotija cheese, cilantro and our secret taco sauce that will win you over."
+              },
+              "calories": {
+                "example": "750"
+              },
+              "price": {
+                "example": "15.99"
+              },
+              "image": {
+                "example": "Yes"
+              }
+            }
+          }
+        }],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "412": {
+            "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/menu/{id}": {
+      "get": {
+        "tags": ["Menu"],
+        "summary": "Get a single menu item by using its ID",
+        "description": "Make a GET request to the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Make sure your are passing a valid ID format.",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Menu"],
+        "summary": "Update a single review by using its ID",
+        "description": "Make a PUT request to the database",
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Make sure your are passing a valid ID format.",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "Shrimp Tacos"
+                },
+                "description": {
+                  "example": "Loaded with plump juicy shrimp, crisp cabbage, avocado, cotija cheese, cilantro and our secret taco sauce that will win you over."
+                },
+                "calories": {
+                  "example": "750"
+                },
+                "price": {
+                  "example": "15.99"
+                },
+                "image": {
+                  "example": "Yes"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "412": {
+            "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Menu"],
+        "summary": "Delete a single menu item by using its ID",
+        "description": "Make a DELETE request to the database",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Make sure your are passing a valid ID format.",
+          "type": "string"
+        }],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
     }
   },
-  "tes": {},
+  "test": {},
   "definitions": {
     "reviews": {
       "type": "object",
@@ -287,8 +572,20 @@
     "menu": {
       "type": "object",
       "properties": {
-        "empty": {
+        "name": {
           "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "calories": {
+          "type": "string"
+        },
+        "price": {
+          "type": "string"
+        },
+        "image": {
+          "type": "base64??"
         }
       }
     },
