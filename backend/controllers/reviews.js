@@ -1,4 +1,3 @@
-const { response } = require('express');
 const mongodb = require('../database/connect');
 const ObjectId = require('mongodb').ObjectId;
 
@@ -23,6 +22,33 @@ const getAll = async (req, res) => {
   }
 };
 
+/*****************************
+ * To get a specific review: *
+ *    Takes an id as params  *
+ *****************************/
+const getReviewID = (req, res) => {
+  if (!ObjectId.isValid(req.params.id)) {
+    res.status(400).json('Must pass a valid ID to delete a menu item.');
+  } else {
+    const reviewId = new ObjectId(req.params.id);
+    mongodb
+      .getDb()
+      .db()
+      .collection('reviews')
+      .find({ _id: reviewId })
+      .toArray((err, result) => {
+        if (err) {
+          res.status(400).json({ message: err });
+        } else if (result.length === 0) {
+          res.status(404).json(`No review was found with ID: ${reviewId}`);
+        } else {
+          res.setHeader('Content-Type', 'application/json');
+          res.status(200).json(result[0]);
+        }
+      });
+  }
+};
+
 /*******************************
  * To get a specific review:   *
  *    Takes an email as params *
@@ -30,8 +56,8 @@ const getAll = async (req, res) => {
 const getReviewEmail = async (req, res) => {
   try {
     const email = req.params.email.toLowerCase();
-    const result = await mongodb.getDb().db().collection('reviews').find({ email: email });
-    result.toArray().then((lists) => {
+    const response = await mongodb.getDb().db().collection('reviews').find({ email: email });
+    response.toArray().then((lists) => {
       res.setHeader('Content-Type', 'application/json');
       res.status(200).json(lists);
     });
@@ -48,8 +74,8 @@ const getReviewState = async (req, res) => {
   try {
     // query.state -> data from URL
     const state = req.query.state.toLowerCase();
-    const result = await mongodb.getDb().db().collection('reviews').find({ state: state });
-    result.toArray().then((lists) => {
+    const response = await mongodb.getDb().db().collection('reviews').find({ state: state });
+    response.toArray().then((lists) => {
       res.setHeader('Content-Type', 'application/json');
       res.status(200).json(lists);
     });
@@ -76,20 +102,54 @@ const createReview = async (req, res) => {
       city: req.body.city.toLowerCase(),
       state: req.body.state.toLowerCase()
     };
-    const response = await mongodb.getDb().db().collection('reviews').insert(newReview);
+    const response = await mongodb.getDb().db().collection('reviews').insertOne(newReview);
     if (response.acknowledged) {
       console.log('POST new review -- success');
       res.status(201).json(response);
     } else {
       res
         .status(500)
-        .json(
-          response.error ||
-            `Something went wrong while attempting to publish the new review, email -> ${newReview.email}`
-        );
+        .json(response.error || `Something went wrong while attempting to add a the new menu item`);
     }
   } catch (err) {
     res.status(500).json(err);
+  }
+};
+
+/****************************
+ * To edit a review:        *
+ *    Takes an id as params *
+ ****************************/
+const editReviewID = async (req, res) => {
+  if (!ObjectId.isValid(req.params.id)) {
+    res.status(400).json('Must pass a valid ID to delete a menu item.');
+  } else {
+    const reviewId = new ObjectId(req.params.id);
+    const newReview = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      phone: req.body.phone,
+      email: req.body.email.toLowerCase(),
+      review: req.body.review,
+      stars: req.body.stars,
+      city: req.body.city.toLowerCase(),
+      state: req.body.state.toLowerCase()
+    };
+    const response = await mongodb
+      .getDb()
+      .db()
+      .collection('reviews')
+      .replaceOne({ _id: reviewId }, newReview);
+    if (response.modifiedCount > 0) {
+      res.status(204).send();
+    } else {
+      res
+        .status(500)
+        .json(
+          response.error ||
+            `Something went wrong while attempting to update review with ID: ${reviewId}`
+        );
+    }
   }
 };
 
@@ -115,13 +175,13 @@ const editReview = async (req, res) => {
       city: req.params.city.toLowerCase(),
       state: req.params.state.toLowerCase()
     };
-    const result = await mongodb
+    const response = await mongodb
       .getDb()
       .db()
       .collection('reviews')
       .replaceOne({ email: email, city: city, state: state }, newReview);
 
-    if (result.modifiedCount > 0) {
+    if (response.modifiedCount > 0) {
       res.status(204).send();
     } else {
       res
@@ -136,6 +196,33 @@ const editReview = async (req, res) => {
   }
 };
 
+/****************************
+ * To delete a review:      *
+ *    Takes an id as params *
+ ****************************/
+const deleteReviewID = async (req, res) => {
+  if (!ObjectId.isValid(req.params.id)) {
+    res.status(400).json('Must pass a valid ID to delete a menu item.');
+  } else {
+    const reviewId = new ObjectId(req.params.id);
+    const response = await mongodb
+      .getDb()
+      .db()
+      .collection('reviews')
+      .deleteOne({ _id: reviewId }, true);
+    if (response.deletedCount > 0) {
+      res.status(204).send();
+    } else {
+      res
+        .status(500)
+        .json(
+          response.error ||
+            `Something went wrong while attempting to delete review with id: ${reviewId}`
+        );
+    }
+  }
+};
+
 /****************************************
  * To delete a review:                    *
  *    Takes a email, city, state params *
@@ -145,19 +232,19 @@ const deleteReview = async (req, res) => {
     const email = req.params.email.toLowerCase();
     const city = req.params.city.toLowerCase();
     const state = req.params.state.toLowerCase();
-    const result = await mongodb
+    const response = await mongodb
       .getDb()
       .db()
       .collection('reviews')
-      .remove({ email: email, city: city, state: state }, true);
+      .deleteOne({ email: email, city: city, state: state }, true);
 
-    if (result.deletedCount > 0) {
+    if (response.deletedCount > 0) {
       res.status(204).send();
     } else {
       res
         .status(500)
         .json(
-          result.error ||
+          response.error ||
             `Something went wrong while attempting to delete review with email ${email}, city ${city} and state ${state}`
         );
     }
@@ -168,9 +255,12 @@ const deleteReview = async (req, res) => {
 
 module.exports = {
   getAll,
-  createReview,
+  getReviewID,
   getReviewEmail,
   getReviewState,
+  createReview,
+  editReviewID,
   editReview,
+  deleteReviewID,
   deleteReview
 };
