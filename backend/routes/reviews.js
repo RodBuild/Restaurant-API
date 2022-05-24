@@ -5,9 +5,9 @@ const validation = require('../validation/middleware');
 
 /*GET*/
 router.get('/', controller.getAll);
-router.get('/:id', controller.getReviewID);
 router.get('/state/', controller.getReviewState);
-router.get('/:email', controller.getReviewEmail);
+router.get('/:id', controller.getReviewID);
+router.get('/email/:email', controller.getReviewEmail);
 // router.get('/:states', controller.getReviewState);
 
 /*POST*/
@@ -15,7 +15,7 @@ router.post('/', validation.saveReview, controller.createReview);
 
 /*PUT*/
 router.put('/:id', validation.saveReview, controller.editReviewID);
-router.put('/:email/:city/:state', validation.saveReview, controller.editReview);
+router.put('/:email/:city/:state', validation.saveReviewShort, controller.editReview);
 
 /*DELETE*/
 router.delete('/:id', controller.deleteReviewID);

@@ -52,6 +52,28 @@ const saveReview = (req, res, next) => {
   });
 };
 
+// For validating JSON of Reviews without email, city, state
+const saveReviewShort = (req, res, next) => {
+  const validationRule = {
+    firstName: 'required|string|min:1',
+    lastName: 'required|string|min:1',
+    phone: 'required|string|max:10|min:10',
+    review: 'required|string|min:10',
+    stars: 'required|string|max:1|min:1',
+  };
+  validator(req.body, validationRule, {}, (err, status) => {
+    if (!status) {
+      res.status(412).send({
+        success: false,
+        message: 'Validation failed',
+        data: err
+      });
+    } else {
+      next();
+    }
+  });
+};
+
 // For validating JSON of users
 const saveUser = (req, res) => {
 
@@ -60,5 +82,6 @@ const saveUser = (req, res) => {
 module.exports = {
   saveMenuItem,
   saveReview,
+  saveReviewShort,
   saveUser,
 };

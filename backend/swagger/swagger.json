@@ -75,7 +75,7 @@
                 "example": "The food was great! I liked the..."
               },
               "stars": {
-                "example": "4"
+                "example": "\"4\""
               },
               "city": {
                 "example": "rexburg"
@@ -159,7 +159,7 @@
                   "example": "The food was great! I liked the..."
                 },
                 "stars": {
-                  "example": "4"
+                  "example": "\"4\""
                 },
                 "city": {
                   "example": "rexburg"
@@ -235,13 +235,16 @@
           "200": {
             "description": "OK"
           },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
         }
       }
     },
-    "/reviews/{email}": {
+    "/reviews/email/{email}": {
       "get": {
         "tags": ["Reviews"],
         "summary": "Get all available reviews under specified email",
@@ -259,6 +262,12 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "412": {
+            "description": "Precondition Failed"
           },
           "500": {
             "description": "Internal Server Error"
@@ -363,6 +372,9 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "412": {
+            "description": "Precondition Failed"
           },
           "500": {
             "description": "Internal Server Error"
