@@ -10,11 +10,15 @@ const app = express();
 
 // setup express app
 app
-//   .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentAuto))
+  // .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentAuto))
   .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
   .use(bodyParser.json())
   .use('/', require('./routes'));
 
+// 
+process.on('uncaughtException', (err, origin) => {
+  console.log(process.stderr.fd, `Caught exception: ${err}\n + Exception origin: ${origin}`);
+});
 
 // now connect to database...
 mongodb.initDb((err) => {
