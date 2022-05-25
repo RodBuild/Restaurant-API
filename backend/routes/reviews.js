@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/reviews');
 const validation = require('../validation/middleware');
+const { body } = require('express-validator');
 
 /*GET*/
 router.get('/', controller.getAll);
@@ -11,11 +12,26 @@ router.get('/email/:email', controller.getReviewEmail);
 // router.get('/:states', controller.getReviewState);
 
 /*POST*/
-router.post('/', validation.saveReview, controller.createReview);
+router.post(
+  '/',
+  body('stars', 'Star rating should be between 1-5').isInt({ min: 1, max: 5 }),
+  validation.saveReview,
+  controller.createReview
+);
 
 /*PUT*/
-router.put('/:id', validation.saveReview, controller.editReviewID);
-router.put('/:email/:city/:state', validation.saveReviewShort, controller.editReview);
+router.put(
+  '/:id',
+  body('stars', 'Star rating should be between 1-5').isInt({ min: 1, max: 5 }),
+  validation.saveReview,
+  controller.editReviewID
+);
+router.put(
+  '/:email/:city/:state',
+  body('stars', 'Star rating should be between 1-5').isInt({ min: 1, max: 5 }),
+  validation.saveReviewShort,
+  controller.editReview
+);
 
 /*DELETE*/
 router.delete('/:id', controller.deleteReviewID);

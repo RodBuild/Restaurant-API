@@ -1,11 +1,13 @@
 const mongodb = require('../database/connect');
 const ObjectId = require('mongodb').ObjectId;
+const { validationResult } = require('express-validator');
 
 /*********
  * Regex *
  *********/
 var rgx_letters = /^[A-Za-z\s]+$/;
 var rgx_email = /^\S+@\S+\.\S+$/;
+// var rgx_stars = /^[1-5]/;
 
 /***********************
  * To get all reviews: *
@@ -107,6 +109,10 @@ const getReviewState = async (req, res) => {
  *    Takes no new params *
  **************************/
 const createReview = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   try {
     // Lowercase email, city, state because they are used on database
     // querrying, case sensitive search
@@ -139,7 +145,10 @@ const createReview = async (req, res) => {
  *    Takes an id as params *
  ****************************/
 const editReviewID = async (req, res) => {
-  if (!ObjectId.isValid(req.params.id)) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  } else if (!ObjectId.isValid(req.params.id)) {
     res.status(400).json('Must pass a valid ID to update a menu item.');
   } else {
     const reviewId = new ObjectId(req.params.id);
@@ -176,6 +185,10 @@ const editReviewID = async (req, res) => {
  *    Takes a email, city, state params *
  ****************************************/
 const editReview = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   try {
     // lowercase them
     const email = req.params.email.toLowerCase();
