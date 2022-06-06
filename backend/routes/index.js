@@ -8,7 +8,7 @@ router.use('/menu', menu);
 router.use('/users', users);
 router.use('/', (req, res) => {
   let info = {
-    github: 'https://github.com/RodBuild/Backend-Dev;',
+    github: 'https://github.com/RodBuild/Restaurant-API;',
     creator: 'Rodrigo Rodriguez'
   };
   res.send(info);

@@ -3,8 +3,8 @@ const swaggerAutogen = require("swagger-autogen")();
 const doc = {
   info: {
     version: '1.0.0', // by default: '1.0.0'
-    title: 'Contacts API', // by default: 'REST API'
-    description: 'API to retrieve data from known contacts' // by default: ''
+    title: 'Restaurant API', // by default: 'REST API'
+    description: 'API to retrieve data for a restaurant' // by default: ''
   },
   //heroku: https://restaurant-api-foodiny.herokuapp.com/
   host: 'localhost:3000',

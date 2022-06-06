@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Contacts API",
-    "description": "API to retrieve data from known contacts"
+    "title": "Restaurant API",
+    "description": "API to retrieve data for a restaurant"
   },
   "host": "restaurant-api-foodiny.herokuapp.com",
   "basePath": "",
