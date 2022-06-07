@@ -553,6 +553,32 @@
           }
         }
       }
+    },
+    "/users/": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get the status of the users",
+        "description": "Make a GET request that would show \"Logged In\" or \"Logged Out\"",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/profile": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get the profile data of the user",
+        "description": "Make a GET request that would show the nickname, name, picture, last update date, and email of the user.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "test": {},
@@ -610,8 +636,11 @@
     "users": {
       "type": "object",
       "properties": {
-        "empty": {
+        "email": {
           "type": "string"
+        },
+        "password": {
+          "type": "hashed string"
         }
       }
     }
