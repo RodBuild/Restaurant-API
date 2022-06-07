@@ -9,7 +9,7 @@
   "basePath": "",
   "tags": [{
       "name": "Reviews",
-      "description": "Make requests to get data related to the stored reviews"
+      "description": "Make requests to get data related to the stored reviews (REQUIERES USERS TO BE LOGGED IN)"
     },
     {
       "name": "Users",
