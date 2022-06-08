@@ -9,7 +9,7 @@
   "basePath": "",
   "tags": [{
       "name": "Reviews",
-      "description": "Make requests to get data related to the stored reviews (REQUIERES USERS TO BE LOGGED IN)"
+      "description": "Make requests to get data related to the stored reviews"
     },
     {
       "name": "Users",
@@ -49,7 +49,7 @@
       },
       "post": {
         "tags": ["Reviews"],
-        "summary": "Create a new review",
+        "summary": "Create a new review (REQUIERES USERS TO BE LOGGED IN)",
         "description": "Make a POST request to the database",
         "parameters": [{
           "name": "body",
@@ -131,7 +131,7 @@
       },
       "put": {
         "tags": ["Reviews"],
-        "summary": "Update a single review by using its ID",
+        "summary": "Update a single review by using its ID (REQUIERES USERS TO BE LOGGED IN)",
         "description": "Make a PUT request to the database",
         "parameters": [{
             "name": "id",
@@ -191,7 +191,7 @@
       },
       "delete": {
         "tags": ["Reviews"],
-        "summary": "Delete a single review by using its ID",
+        "summary": "Delete a single review by using its ID (REQUIERES USERS TO BE LOGGED IN)",
         "description": "Make a DELETE request to the database",
         "parameters": [{
           "name": "id",
@@ -281,7 +281,7 @@
     "/reviews/{email}/{city}/{state}": {
       "put": {
         "tags": ["Reviews"],
-        "summary": "Update an existing review with specific email, city, state",
+        "summary": "Update an existing review with specific email, city, state (REQUIERES USERS TO BE LOGGED IN)",
         "description": "Make a PUT request to the database",
         "parameters": [{
             "name": "email",
@@ -353,7 +353,7 @@
       },
       "delete": {
         "tags": ["Reviews"],
-        "summary": "Delete an existing review with specific email, city, state",
+        "summary": "Delete an existing review with specific email, city, state (REQUIERES USERS TO BE LOGGED IN)",
         "description": "Make a DELETE request to the database",
         "parameters": [{
             "name": "email",
@@ -411,7 +411,7 @@
       },
       "post": {
         "tags": ["Menu"],
-        "summary": "Create a new menu item",
+        "summary": "Create a new menu item (REQUIERES USERS TO BE LOGGED IN)",
         "description": "Make a POST request to the database",
         "parameters": [{
           "name": "body",
@@ -481,7 +481,7 @@
       },
       "put": {
         "tags": ["Menu"],
-        "summary": "Update a single review by using its ID",
+        "summary": "Update a single review by using its ID (REQUIERES USERS TO BE LOGGED IN)",
         "description": "Make a PUT request to the database",
         "parameters": [{
             "name": "id",
@@ -532,7 +532,7 @@
       },
       "delete": {
         "tags": ["Menu"],
-        "summary": "Delete a single menu item by using its ID",
+        "summary": "Delete a single menu item by using its ID (REQUIERES USERS TO BE LOGGED IN)",
         "description": "Make a DELETE request to the database",
         "parameters": [{
           "name": "id",
@@ -571,7 +571,7 @@
       "get": {
         "tags": ["Users"],
         "summary": "Get the profile data of the user",
-        "description": "Make a GET request that would show the nickname, name, picture, last update date, and email of the user.",
+        "description": "Make a GET request that would show the nickname, name, picture, last update date, and email of the user",
         "parameters": [],
         "responses": {
           "200": {

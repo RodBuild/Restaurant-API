@@ -9,7 +9,7 @@ const getAll = async (req, res) => {
   try {
     const data = await mongodb.getDb().db().collection('menu').find();
     data.toArray((err, lists) => {
-      // if data is empty -> not found
+      // we are not checking for empty data
       if (err) {
         res.status(400).json({ message: err });
       } else {

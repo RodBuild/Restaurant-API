@@ -6,10 +6,10 @@ const { body } = require('express-validator');
 const { requiresAuth } = require('express-openid-connect');
 
 /*GET*/
-router.get('/', requiresAuth(), controller.getAll);
-router.get('/state/', requiresAuth(), controller.getReviewState);
-router.get('/:id', requiresAuth(), controller.getReviewID);
-router.get('/email/:email', requiresAuth(), controller.getReviewEmail);
+router.get('/', controller.getAll);
+router.get('/state/', controller.getReviewState);
+router.get('/:id', controller.getReviewID);
+router.get('/email/:email', controller.getReviewEmail);
 // router.get('/:states', controller.getReviewState);
 
 /*POST*/
